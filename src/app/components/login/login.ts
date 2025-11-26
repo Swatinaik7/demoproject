@@ -1,20 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss',
+  styleUrls: ['./login.scss'],
 })
 export class Login {
   LoginForm:FormGroup;
-  constructor(private fb: FormBuilder)
+  constructor(private fb: FormBuilder,private router:Router)
   {
     this.LoginForm=this.fb.group(
       {
         email:['',[Validators.required, Validators.email]],
-        password:['',[Validators.required, Validators.minLength(0)]],
+        password:['',[Validators.required, Validators.minLength(1)]],
       }
     );
   }
@@ -40,6 +42,7 @@ export class Login {
     value2:this.LoginForm.get('password')?.value,
   }
   console.log(this.obj);
+  this.router.navigate(['/home']);
   }
 
 }
